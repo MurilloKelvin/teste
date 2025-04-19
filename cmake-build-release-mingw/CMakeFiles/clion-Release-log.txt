@@ -1,0 +1,10 @@
+"C:\Program Files\JetBrains\CLion 2024.3.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2024.3.2/bin/ninja/win/x64/ninja.exe" -DCMAKE_TOOLCHAIN_FILE=E:/original/clionprojects/pds2-20251-tf-web-searcher/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DCMAKE_BUILD_TYPE=Release -G Ninja -S E:\ORIGINAL\CLionProjects\PDS2-20251-TF-Web-Searcher -B E:\ORIGINAL\CLionProjects\PDS2-20251-TF-Web-Searcher\cmake-build-release-mingw
+-- Configuring done (0.3s)
+-- Generating done (0.3s)
+CMake Warning:
+  Manually-specified variables were not used by the project:
+
+    CMAKE_TOOLCHAIN_FILE
+
+
+-- Build files have been written to: E:/ORIGINAL/CLionProjects/PDS2-20251-TF-Web-Searcher/cmake-build-release-mingw

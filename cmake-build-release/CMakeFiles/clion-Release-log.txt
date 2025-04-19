@@ -1,0 +1,11 @@
+"C:\Program Files\JetBrains\CLion 2024.3.2\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Release "-DCMAKE_MAKE_PROGRAM=C:/Program Files/JetBrains/CLion 2024.3.2/bin/ninja/win/x64/ninja.exe" -DCMAKE_TOOLCHAIN_FILE=E:/original/clionprojects/pds2-20251-tf-web-searcher/vcpkg/scripts/buildsystems/vcpkg.cmake -DVCPKG_TARGET_TRIPLET=x64-mingw-static -DCMAKE_BUILD_TYPE=Release -G Ninja -S E:\ORIGINAL\CLionProjects\PDS2-20251-TF-Web-Searcher -B E:\ORIGINAL\CLionProjects\PDS2-20251-TF-Web-Searcher\cmake-build-release
+-- The CXX compiler identification is GNU 13.1.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: C:/Program Files/JetBrains/CLion 2024.3.2/bin/mingw/bin/g++.exe - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Found ZLIB: optimized;E:/ORIGINAL/CLionProjects/PDS2-20251-TF-Web-Searcher/vcpkg/installed/x64-mingw-static/lib/libzlib.a;debug;E:/ORIGINAL/CLionProjects/PDS2-20251-TF-Web-Searcher/vcpkg/installed/x64-mingw-static/debug/lib/libzlibd.a (found suitable version "1.3.1", minimum required is "1")
+-- Configuring done (2.2s)
+-- Generating done (0.2s)
+-- Build files have been written to: E:/ORIGINAL/CLionProjects/PDS2-20251-TF-Web-Searcher/cmake-build-release

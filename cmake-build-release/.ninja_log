@@ -1,0 +1,5 @@
+# ninja log v6
+70	952	7660084192651178	CMakeFiles/PDS2-20251-TF-Web-Searcher.dir/src/config.cpp.obj	f3359b8de43a133e
+33	995	7660084192281169	CMakeFiles/PDS2-20251-TF-Web-Searcher.dir/src/logger.cpp.obj	3d0e8c2d8610dc84
+5	2431	7660084191991139	CMakeFiles/PDS2-20251-TF-Web-Searcher.dir/src/main.cpp.obj	70d80cdeee75c68a
+21	3085	7660084192151161	CMakeFiles/PDS2-20251-TF-Web-Searcher.dir/src/scraper.cpp.obj	d1d4fc23c914911d
