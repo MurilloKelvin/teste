@@ -2,8 +2,9 @@
 #include <iostream>
 
 int main() {
-    Logger logger("PDS2-20251-TF-Web-Searcher_log.txt");
+    Logger logger("output/mercado_livre_data.txt");
     Config config;
+
 
     config.add_site("Mercado Livre", "https://lista.mercadolivre.com.br/iphone", "output/mercado_livre_data.txt");
     config.add_site("OLX", "https://www.olx.com.br/autos-e-pecas/corolla", "output/olx_data.txt");

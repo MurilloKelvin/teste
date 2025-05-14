@@ -1,6 +1,9 @@
 #include "scraper.h"
 #include <fstream>
 #include <iostream>
+#include <filesystem>
+#include <sys/stat.h>
+
 
 // Construtor da classe WebScraper
 WebScraper::WebScraper(const Config& cfg, Logger& log) : config(cfg), logger(log) {
@@ -83,26 +86,27 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_mercado_livre(GumboNode* 
     std::vector<ScrapedItem> items;
     std::vector<GumboNode*> product_nodes;
 
-  // Encontra os itens (li com classe ui-search-layout__item) nao funciona essa porra
-    search_node(node, "li", "class", "ui-search-layout__item", product_nodes);
+    // Busca por elementos h3 com a classe poly-component__title-wrapper
+    search_node(node, "h3", "class", "poly-component__title-wrapper", product_nodes);
     logger.log(Logger::LogLevel::INFO, "Número de itens encontrados no Mercado Livre: " + std::to_string(product_nodes.size()));
 
     for (auto* product : product_nodes) {
         ScrapedItem item;
-        std::vector<GumboNode*> link_nodes, title_nodes, price_nodes;
+        std::vector<GumboNode*> link_nodes, price_nodes;
 
-        // Encontra o elemento <a> com o atributo title
-        search_node(product, "a", "title", "", link_nodes);
+        // Encontra o link dentro do h3
+        search_node(product, "a", "class", "poly-component__title", link_nodes);
         if (!link_nodes.empty()) {
-            // Extrai o título do atributo title
-            GumboAttribute* title_attr = gumbo_get_attribute(&link_nodes[0]->v.element.attributes, "title");
-            if (title_attr) {
-                item.title = trim(title_attr->value);
-                logger.log(Logger::LogLevel::INFO, "Título encontrado no atributo title: " + item.title);
-            } else {
-                logger.log(Logger::LogLevel::WARNING, "Atributo title não encontrado no elemento <a>");
-                item.title = "N/A";
+            // Extrai o título do conteúdo do link
+            std::string title;
+            for (unsigned int i = 0; i < link_nodes[0]->v.element.children.length; ++i) {
+                GumboNode* child = static_cast<GumboNode*>(link_nodes[0]->v.element.children.data[i]);
+                if (child->type == GUMBO_NODE_TEXT) {
+                    title += child->v.text.text;
+                }
             }
+            item.title = trim(title);
+            logger.log(Logger::LogLevel::INFO, "Titulo encontrado: " + item.title);
 
             // Extrai o link do atributo href
             GumboAttribute* href = gumbo_get_attribute(&link_nodes[0]->v.element.attributes, "href");
@@ -110,73 +114,17 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_mercado_livre(GumboNode* 
                 item.url = href->value;
                 logger.log(Logger::LogLevel::INFO, "Link encontrado: " + item.url);
             } else {
-                logger.log(Logger::LogLevel::WARNING, "Link não encontrado para um item no Mercado Livre");
+                logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item no Mercado Livre");
                 item.url = "N/A";
             }
         } else {
-            // Tenta encontrar o elemento <a> com a classe ui-search-link
-            search_node(product, "a", "class", "ui-search-link", link_nodes);
-            if (!link_nodes.empty()) {
-                GumboAttribute* title_attr = gumbo_get_attribute(&link_nodes[0]->v.element.attributes, "title");
-                if (title_attr) {
-                    item.title = trim(title_attr->value);
-                    logger.log(Logger::LogLevel::INFO, "Título encontrado no atributo title (ui-search-link): " + item.title);
-                } else {
-                    logger.log(Logger::LogLevel::WARNING, "Atributo title não encontrado no elemento <a> com classe ui-search-link");
-                    item.title = "N/A";
-                }
-
-                GumboAttribute* href = gumbo_get_attribute(&link_nodes[0]->v.element.attributes, "href");
-                if (href) {
-                    item.url = href->value;
-                    logger.log(Logger::LogLevel::INFO, "Link encontrado: " + item.url);
-                } else {
-                    logger.log(Logger::LogLevel::WARNING, "Link não encontrado para um item no Mercado Livre");
-                    item.url = "N/A";
-                }
-            } else {
-                // Tenta encontrar o título em um elemento <h2> ou <h3> com a classe ui-search-item__title
-                search_node(product, "h2", "class", "ui-search-item__title", title_nodes);
-                if (title_nodes.empty()) {
-                    search_node(product, "h3", "class", "ui-search-item__title", title_nodes);
-                }
-                if (!title_nodes.empty()) {
-                    std::string title;
-                    for (unsigned int i = 0; i < title_nodes[0]->v.element.children.length; ++i) {
-                        GumboNode* child = static_cast<GumboNode*>(title_nodes[0]->v.element.children.data[i]);
-                        if (child->type == GUMBO_NODE_TEXT) {
-                            title += child->v.text.text;
-                        }
-                    }
-                    item.title = trim(title);
-                    logger.log(Logger::LogLevel::INFO, "Título encontrado em h2/h3: " + item.title);
-                } else {
-                    logger.log(Logger::LogLevel::WARNING, "Título não encontrado para um item no Mercado Livre");
-                    item.title = "N/A";
-                }
-
-                // Se não encontrou o link anteriormente, tenta novamente
-                if (item.url.empty()) {
-                    search_node(product, "a", "class", "ui-search-link", link_nodes);
-                    if (!link_nodes.empty()) {
-                        GumboAttribute* href = gumbo_get_attribute(&link_nodes[0]->v.element.attributes, "href");
-                        if (href) {
-                            item.url = href->value;
-                            logger.log(Logger::LogLevel::INFO, "Link encontrado: " + item.url);
-                        } else {
-                            logger.log(Logger::LogLevel::WARNING, "Link não encontrado para um item no Mercado Livre");
-                            item.url = "N/A";
-                        }
-                    } else {
-                        logger.log(Logger::LogLevel::WARNING, "Link não encontrado para um item no Mercado Livre");
-                        item.url = "N/A";
-                    }
-                }
-            }
+            logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item no Mercado Livre");
+            item.url = "N/A";
+            item.title = "N/A";
         }
 
         // Encontra o preço (span com classe andes-money-amount__fraction)
-        search_node(product, "span", "class", "andes-money-amount__fraction", price_nodes);
+        search_node(product->parent, "span", "class", "andes-money-amount__fraction", price_nodes);
         if (!price_nodes.empty()) {
             std::string price;
             for (unsigned int i = 0; i < price_nodes[0]->v.element.children.length; ++i) {
@@ -186,15 +134,16 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_mercado_livre(GumboNode* 
                 }
             }
             item.price = trim(price);
-            logger.log(Logger::LogLevel::INFO, "Preço encontrado: " + item.price);
+            logger.log(Logger::LogLevel::INFO, "Preco encontrado: " + item.price);
         } else {
-            logger.log(Logger::LogLevel::WARNING, "Preço não encontrado para um item no Mercado Livre");
+            logger.log(Logger::LogLevel::WARNING, "Preco nao encontrado para um item no Mercado Livre");
             item.price = "N/A";
         }
 
-        // Adiciona o item mesmo que o título ou preço estejam faltando
-        items.push_back(item);
-        logger.log(Logger::LogLevel::INFO, "Item encontrado no Mercado Livre: " + item.title + " | " + item.price + " | " + item.url);
+        if (!item.title.empty() || !item.price.empty() || !item.url.empty()) {
+            items.push_back(item);
+            logger.log(Logger::LogLevel::INFO, "Item encontrado no Mercado Livre: " + item.title + " | " + item.price + " | " + item.url);
+        }
     }
     return items;
 }
@@ -206,12 +155,12 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
 
     // Encontra os itens (li com classe sc-1fcmfeb-2 ou outra classe específica)
     search_node(node, "li", "class", "sc-1fcmfeb-2", product_nodes);
-    logger.log(Logger::LogLevel::INFO, "Número de itens encontrados na OLX: " + std::to_string(product_nodes.size()));
+    logger.log(Logger::LogLevel::INFO, "Numero de itens encontrados na OLX: " + std::to_string(product_nodes.size()));
 
     if (product_nodes.empty()) {
         // Tenta outro seletor para itens (ex.: li com data-lid)
         search_node(node, "li", "data-lid", "", product_nodes);
-        logger.log(Logger::LogLevel::INFO, "Número de itens encontrados na OLX (usando data-lid): " + std::to_string(product_nodes.size()));
+        logger.log(Logger::LogLevel::INFO, "Numero de itens encontrados na OLX (usando data-lid): " + std::to_string(product_nodes.size()));
     }
 
     for (auto* product : product_nodes) {
@@ -232,9 +181,9 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
                 }
             }
             item.title = trim(title);
-            logger.log(Logger::LogLevel::INFO, "Título encontrado: " + item.title);
+            logger.log(Logger::LogLevel::INFO, "Titulo encontrado: " + item.title);
         } else {
-            logger.log(Logger::LogLevel::WARNING, "Título não encontrado para um item na OLX");
+            logger.log(Logger::LogLevel::WARNING, "Titulo nao encontrado para um item na OLX");
             item.title = "N/A";
         }
 
@@ -252,9 +201,9 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
                 }
             }
             item.price = trim(price);
-            logger.log(Logger::LogLevel::INFO, "Preço encontrado: " + item.price);
+            logger.log(Logger::LogLevel::INFO, "Preco encontrado: " + item.price);
         } else {
-            logger.log(Logger::LogLevel::WARNING, "Preço não encontrado para um item na OLX");
+            logger.log(Logger::LogLevel::WARNING, "Preco não encontrado para um item na OLX");
             item.price = "N/A";
         }
 
@@ -269,11 +218,11 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
                 item.url = href->value;
                 logger.log(Logger::LogLevel::INFO, "Link encontrado: " + item.url);
             } else {
-                logger.log(Logger::LogLevel::WARNING, "Link não encontrado para um item na OLX");
+                logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item na OLX");
                 item.url = "N/A";
             }
         } else {
-            logger.log(Logger::LogLevel::WARNING, "Link não encontrado para um item na OLX");
+            logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item na OLX");
             item.url = "N/A";
         }
 
@@ -285,24 +234,68 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
 }
 
 // Salva os dados extraídos em arquivo
-void WebScraper::save_to_file(const std::vector<ScrapedItem>& items, const std::string& filename) {
-    std::ofstream file(filename);
-    if (!file.is_open()) {
-        logger.log(Logger::LogLevel::ERR, "Falha ao abrir arquivo de saída: " + filename);
+void WebScraper::save_to_file(const std::vector<ScrapedItem>& items, const std::string& output) {
+    // Caminho fixo de saída
+
+    // Garante que o diretório de saída exista
+    create_output_directory("output");
+
+    // Verifica se há itens para salvar
+    if (items.empty()) {
+        logger.log(Logger::LogLevel::WARNING, "Nenhum item para salvar em: " + output);
         return;
     }
 
-    file << "Título,Preço,URL\n";
-    for (const auto& item : items) {
-        file << "\"" << item.title << "\",\"" << item.price << "\",\"" << item.url << "\"\n";
+    // Tenta abrir o arquivo
+    std::ofstream file(output, std::ios::out);
+    if (!file.is_open()) {
+        logger.log(Logger::LogLevel::ERR, "Falha ao abrir arquivo: " + output);
+        return;
     }
+
+    // Escreve os dados no arquivo
+    for (const auto& item : items) {
+        if (!item.title.empty() || !item.price.empty() || !item.url.empty()) {
+            file << "Título: " << item.title << "\n"
+                 << "Preço: " << item.price << "\n"
+                 << "URL: " << item.url << "\n"
+                 << "----------------------------------------\n";
+            file.flush(); // Força escrita a cada item, opcional
+        }
+    }
+
     file.close();
-    logger.log(Logger::LogLevel::INFO, "Dados salvos em: " + filename);
+
+    // Confirmação de sucesso
+    if (std::filesystem::exists(output) && std::filesystem::file_size(output) > 0) {
+        logger.log(Logger::LogLevel::INFO, "Dados salvos em: " + output);
+    } else {
+        logger.log(Logger::LogLevel::ERR, "Arquivo não foi salvo corretamente: " + output);
+    }
+}
+
+
+void WebScraper::create_output_directory(const std::string& output) {
+    try {
+        if (!std::filesystem::exists(output)) {
+            if (std::filesystem::create_directory(output)) {
+                logger.log(Logger::LogLevel::INFO, "Diretorio criado: " + output);
+            } else {
+                logger.log(Logger::LogLevel::ERR, "Falha ao criar diretório: " + output);
+            }
+        } else {
+            logger.log(Logger::LogLevel::INFO, "Diretorio ja existe: " + output);
+        }
+    } catch (const std::filesystem::filesystem_error& e) {
+        logger.log(Logger::LogLevel::ERR, "Erro ao manipular diretorio: " + std::string(e.what()));
+    }
 }
 
 // Função principal de scraping
 bool WebScraper::scrape() {
     if (!curl) return false;
+
+    create_output_directory("output");
 
     for (const auto& site : config.get_sites()) {
         logger.log(Logger::LogLevel::INFO, "Iniciando scraping em: " + site.name);
@@ -314,8 +307,10 @@ bool WebScraper::scrape() {
 
         if (site.name == "Mercado Livre") {
             items = parse_mercado_livre(output->root);
+            save_to_file(items, "output/mercado_livre_data.txt");
         } else if (site.name == "OLX") {
             items = parse_olx(output->root);
+            save_to_file(items, "output/olx_data.txt");
         }
 
         if (items.empty()) {
