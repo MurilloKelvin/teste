@@ -9,8 +9,8 @@ std::vector<Config::SiteConfig> Config::get_sites() const { return sites; }
 int Config::get_max_retries() const { return max_retries; }
 bool Config::get_verbose() const { return verbose; }
 
-void Config::add_site(const std::string& name, const std::string& url, const std::string& output_file) {
-    sites.push_back({name, url, output_file});
+void Config::add_site(const std::string& name, const std::string& url, const std::string& output) {
+    sites.push_back({name, url, output});
 }
 
 void Config::set_max_retries(int retries) { max_retries = retries; }

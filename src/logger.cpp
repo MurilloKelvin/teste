@@ -3,10 +3,10 @@
 #include <mutex> // Adicionado para std::mutex e std::lock_guard
 #include <ctime>
 
-Logger::Logger(const std::string& filename) {
-    log_file.open(filename, std::ios::app);
+Logger::Logger(const std::string& output) {
+    log_file.open(output, std::ios::app);
     if (!log_file.is_open()) {
-        std::cerr << "Falha ao abrir o arquivo de log: " << filename << std::endl;
+        std::cerr << "Falha ao abrir o arquivo de log: " << "output/log.txt" << std::endl;
     }
 }
 
