@@ -5,7 +5,7 @@
 #include <sys/stat.h>
 
 
-// Construtor da classe WebScraper
+
 WebScraper::WebScraper(const Config& cfg, Logger& log) : config(cfg), logger(log) {
     curl = curl_easy_init(); // Inicializa o handle do libcurl
     if (!curl) {
@@ -13,10 +13,9 @@ WebScraper::WebScraper(const Config& cfg, Logger& log) : config(cfg), logger(log
     }
 }
 
-// Destrutor da classe WebScraper
 WebScraper::~WebScraper() {
     if (curl) {
-        curl_easy_cleanup(curl); // Libera os recursos do libcurl
+        curl_easy_cleanup(curl);
     }
 }
 
@@ -35,7 +34,7 @@ std::string WebScraper::fetch_page(const std::string& url, int retries_left) {
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, write_callback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &html_content);
-    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L); // Segue redirecionamentos
+    curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
     curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows NT 10.0; Win64; x64)");
 
     CURLcode res = curl_easy_perform(curl);
