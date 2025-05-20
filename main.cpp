@@ -16,6 +16,8 @@ int main() {
         return 1;
     }
 
+    scraper.scrape();
+
     std::cout << "Scraping concluído pelo Web-Searcher. Verifique os arquivos de saída." << std::endl;
     return 0;
 }

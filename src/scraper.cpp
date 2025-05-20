@@ -234,10 +234,7 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
 
 // Salva os dados extraídos em arquivo
 void WebScraper::save_to_file(const std::vector<ScrapedItem>& items, const std::string& output) {
-    // Caminho fixo de saída
 
-    // Garante que o diretório de saída exista
-    create_output_directory("output");
 
     // Verifica se há itens para salvar
     if (items.empty()) {
@@ -252,20 +249,18 @@ void WebScraper::save_to_file(const std::vector<ScrapedItem>& items, const std::
         return;
     }
 
-    // Escreve os dados no arquivo
     for (const auto& item : items) {
         if (!item.title.empty() || !item.price.empty() || !item.url.empty()) {
             file << "Título: " << item.title << "\n"
                  << "Preço: " << item.price << "\n"
                  << "URL: " << item.url << "\n"
                  << "----------------------------------------\n";
-            file.flush(); // Força escrita a cada item, opcional
+            file.flush();
         }
     }
 
     file.close();
 
-    // Confirmação de sucesso
     if (std::filesystem::exists(output) && std::filesystem::file_size(output) > 0) {
         logger.log(Logger::LogLevel::INFO, "Dados salvos em: " + output);
     } else {
