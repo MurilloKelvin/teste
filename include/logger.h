@@ -3,22 +3,22 @@
 
 #include <string>
 #include <fstream>
-#include <mutex> // Adicionado para std::mutex
+#include <mutex>
 
 class Logger {
 public:
-    enum class LogLevel { INFO, WARNING, ERR }; // ERROR foi renomeado para ERR
+    enum class LogLevel { INFO, WARNING, ERR };
 
-    Logger(const std::string& filename);
+    Logger(const std::string& log_file);
     ~Logger();
 
     void log(LogLevel level, const std::string& message);
 
 private:
-    std::ofstream log_file; // Renomeado de 'file' para 'log_file'
-    std::mutex log_mutex;   // Adicionado para sincronização
+    std::ofstream log_file;
+    std::mutex log_mutex;
 
-    std::string get_timestamp(); // Declaração da função get_timestamp
+    std::string get_timestamp();
     std::string level_to_string(LogLevel level);
 };
 

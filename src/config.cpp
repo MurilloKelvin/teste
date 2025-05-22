@@ -1,6 +1,7 @@
 #include "config.h"
 
 Config::Config() : max_retries(3), verbose(false) {
+
     add_site("Mercado Livre", "https://lista.mercadolivre.com.br/celulares", "output/mercado_livre_data.txt");
     add_site("OLX", "https://www.olx.com.br/autos-e-pecas/carros-vans-e-utilitarios", "output/olx_data.txt");
 }

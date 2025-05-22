@@ -96,7 +96,6 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_mercado_livre(GumboNode* 
         // Encontra o link dentro do h3
         search_node(product, "a", "class", "poly-component__title", link_nodes);
         if (!link_nodes.empty()) {
-            // Extrai o título do conteúdo do link
             std::string title;
             for (unsigned int i = 0; i < link_nodes[0]->v.element.children.length; ++i) {
                 GumboNode* child = static_cast<GumboNode*>(link_nodes[0]->v.element.children.data[i]);
@@ -105,19 +104,19 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_mercado_livre(GumboNode* 
                 }
             }
             item.title = trim(title);
-            logger.log(Logger::LogLevel::INFO, "Titulo encontrado: " + item.title);
+          //  logger.log(Logger::LogLevel::INFO, "Titulo encontrado: " + item.title); // usar so pra teste
 
             // Extrai o link do atributo href
             GumboAttribute* href = gumbo_get_attribute(&link_nodes[0]->v.element.attributes, "href");
             if (href) {
                 item.url = href->value;
-                logger.log(Logger::LogLevel::INFO, "Link encontrado: " + item.url);
+           //     logger.log(Logger::LogLevel::INFO, "Link encontrado: " + item.url); // usar so pra teste
             } else {
-                logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item no Mercado Livre");
+             //   logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item no Mercado Livre"); // usar so pra teste
                 item.url = "N/A";
             }
         } else {
-            logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item no Mercado Livre");
+          //  logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item no Mercado Livre"); // usar so pra teste
             item.url = "N/A";
             item.title = "N/A";
         }
@@ -133,15 +132,15 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_mercado_livre(GumboNode* 
                 }
             }
             item.price = trim(price);
-            logger.log(Logger::LogLevel::INFO, "Preco encontrado: " + item.price);
+         //   logger.log(Logger::LogLevel::INFO, "Preco encontrado: " + item.price); // usar so pra teste
         } else {
-            logger.log(Logger::LogLevel::WARNING, "Preco nao encontrado para um item no Mercado Livre");
+         //   logger.log(Logger::LogLevel::WARNING, "Preco nao encontrado para um item no Mercado Livre"); // usar so pra teste
             item.price = "N/A";
         }
 
         if (!item.title.empty() || !item.price.empty() || !item.url.empty()) {
             items.push_back(item);
-            logger.log(Logger::LogLevel::INFO, "Item encontrado no Mercado Livre: " + item.title + " | " + item.price + " | " + item.url);
+           // logger.log(Logger::LogLevel::INFO, "Item encontrado no Mercado Livre: " + item.title + " | " + item.price + " | " + item.url); // usar so pra teste
         }
     }
     return items;
@@ -159,7 +158,6 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
     if (product_nodes.empty()) {
         // Tenta outro seletor para itens (ex.: li com data-lid)
         search_node(node, "li", "data-lid", "", product_nodes);
-        logger.log(Logger::LogLevel::INFO, "Numero de itens encontrados na OLX (usando data-lid): " + std::to_string(product_nodes.size()));
     }
 
     for (auto* product : product_nodes) {
@@ -180,13 +178,12 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
                 }
             }
             item.title = trim(title);
-            logger.log(Logger::LogLevel::INFO, "Titulo encontrado: " + item.title);
+           // logger.log(Logger::LogLevel::INFO, "Titulo encontrado: " + item.title); // usar so pra teste
         } else {
-            logger.log(Logger::LogLevel::WARNING, "Titulo nao encontrado para um item na OLX");
+            // logger.log(Logger::LogLevel::WARNING, "Titulo nao encontrado para um item na OLX"); // usar so pra teste
             item.title = "N/A";
         }
 
-        // Encontra o preço (span com classe específica)
         search_node(product, "span", "class", "price", price_nodes);
         if (price_nodes.empty()) {
             search_node(product, "span", "class", "ad-card-price", price_nodes);
@@ -200,9 +197,9 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
                 }
             }
             item.price = trim(price);
-            logger.log(Logger::LogLevel::INFO, "Preco encontrado: " + item.price);
+          //  logger.log(Logger::LogLevel::INFO, "Preco encontrado: " + item.price); // usar so pra teste
         } else {
-            logger.log(Logger::LogLevel::WARNING, "Preco não encontrado para um item na OLX");
+          //  logger.log(Logger::LogLevel::WARNING, "Preco não encontrado para um item na OLX"); // usar so pra teste
             item.price = "N/A";
         }
 
@@ -215,19 +212,18 @@ std::vector<WebScraper::ScrapedItem> WebScraper::parse_olx(GumboNode* node) {
             GumboAttribute* href = gumbo_get_attribute(&link_node->v.element.attributes, "href");
             if (href) {
                 item.url = href->value;
-                logger.log(Logger::LogLevel::INFO, "Link encontrado: " + item.url);
+             //   logger.log(Logger::LogLevel::INFO, "Link encontrado: " + item.url); // usar so pra teste
             } else {
-                logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item na OLX");
+               // logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item na OLX"); // usar so pra teste
                 item.url = "N/A";
             }
         } else {
-            logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item na OLX");
+            // logger.log(Logger::LogLevel::WARNING, "Link nao encontrado para um item na OLX"); //usar so pra teste
             item.url = "N/A";
         }
 
-        // Adiciona o item mesmo que o título ou preço estejam faltando
         items.push_back(item);
-        logger.log(Logger::LogLevel::INFO, "Item encontrado na OLX: " + item.title + " | " + item.price + " | " + item.url);
+       //  logger.log(Logger::LogLevel::INFO, "Item encontrado na OLX: " + item.title + " | " + item.price + " | " + item.url); // usasr so pra  teste
     }
     return items;
 }
@@ -251,9 +247,9 @@ void WebScraper::save_to_file(const std::vector<ScrapedItem>& items, const std::
 
     for (const auto& item : items) {
         if (!item.title.empty() || !item.price.empty() || !item.url.empty()) {
-            file << "Título: " << item.title << "\n"
-                 << "Preço: " << item.price << "\n"
-                 << "URL: " << item.url << "\n"
+            file << "\n Título: " << item.title << "\n"
+                 <<     "Preço: " << item.price << "\n"
+                 <<     "URL: " << item.url << "\n"
                  << "----------------------------------------\n";
             file.flush();
         }
@@ -289,7 +285,7 @@ void WebScraper::create_output_directory(const std::string& output) {
 bool WebScraper::scrape() {
     if (!curl) return false;
 
-    create_output_directory("output");
+    create_output_directory("../output");
 
     for (const auto& site : config.get_sites()) {
         logger.log(Logger::LogLevel::INFO, "Iniciando scraping em: " + site.name);
@@ -301,14 +297,14 @@ bool WebScraper::scrape() {
 
         if (site.name == "Mercado Livre") {
             items = parse_mercado_livre(output->root);
-            save_to_file(items, "output/mercado_livre_data.txt");
+            save_to_file(items, "../output/mercado_livre_data.txt");
         } else if (site.name == "OLX") {
             items = parse_olx(output->root);
-            save_to_file(items, "output/olx_data.txt");
+            save_to_file(items, "../output/olx_data.txt");
         }
 
         if (items.empty()) {
-            logger.log(Logger::LogLevel::WARNING, "Nenhum item encontrado em: " + site.name);
+          // logger.log(Logger::LogLevel::WARNING, "Nenhum item encontrado em: " + site.name);  // usar so pra teste
         } else {
             save_to_file(items, site.output_file);
         }

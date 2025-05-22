@@ -1,0 +1,20 @@
+[2025-05-22 16:28:27] [CONSTRUTOR] Arquivo de log aberto/criado.
+[2025-05-22 16:28:27] [INFO] Diretorio ja existe: ../output
+[2025-05-22 16:28:27] [INFO] Iniciando scraping em: Mercado Livre
+[2025-05-22 16:28:29] [INFO] Página baixada com sucesso: https://lista.mercadolivre.com.br/celulares
+[2025-05-22 16:28:29] [INFO] Número de itens encontrados no Mercado Livre: 51
+[2025-05-22 16:28:29] [INFO] Dados salvos em: ../output/mercado_livre_data.txt
+[2025-05-22 16:28:29] [ERROR] Falha ao abrir arquivo: output/mercado_livre_data.txt
+[2025-05-22 16:28:29] [INFO] Iniciando scraping em: OLX
+[2025-05-22 16:28:29] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/carros-vans-e-utilitarios
+[2025-05-22 16:28:29] [INFO] Numero de itens encontrados na OLX: 0
+[2025-05-22 16:28:29] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
+[2025-05-22 16:28:29] [INFO] Iniciando scraping em: Mercado Livre
+[2025-05-22 16:28:31] [INFO] Página baixada com sucesso: https://lista.mercadolivre.com.br/iphone
+[2025-05-22 16:28:31] [INFO] Número de itens encontrados no Mercado Livre: 47
+[2025-05-22 16:28:31] [INFO] Dados salvos em: ../output/mercado_livre_data.txt
+[2025-05-22 16:28:31] [ERROR] Falha ao abrir arquivo: output/mercado_livre_data.txt
+[2025-05-22 16:28:31] [INFO] Iniciando scraping em: OLX
+[2025-05-22 16:28:33] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/corolla
+[2025-05-22 16:28:33] [INFO] Numero de itens encontrados na OLX: 0
+[2025-05-22 16:28:33] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
