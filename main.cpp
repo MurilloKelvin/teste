@@ -1,8 +1,18 @@
 #include "include/scraper.h"
 #include <iostream>
+#include <filesystem>
+#include  "logger.h"
+#include "config.h"
+#include <string>
 
 int main() {
-    Logger logger("output/mercado_livre_data.txt");
+
+    const std::string output_dir_name = "../output";
+    const std::string log_file_name = "log_file.txt";
+    const std::string full_log_path = output_dir_name + "/" + log_file_name;
+
+
+    Logger logger(full_log_path);
     Config config;
 
 
@@ -16,7 +26,6 @@ int main() {
         return 1;
     }
 
-    scraper.scrape();
 
     std::cout << "Scraping concluído pelo Web-Searcher. Verifique os arquivos de saída." << std::endl;
     return 0;
