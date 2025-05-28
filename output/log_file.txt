@@ -1,0 +1,29 @@
+[2025-05-28 19:44:56] [INFO] Diretorio ja existe: ../output
+[2025-05-28 19:44:56] [INFO] Iniciando scraping em: Mercado Livre
+[2025-05-28 19:44:59] [INFO] Página baixada com sucesso: https://lista.mercadolivre.com.br/celulares
+[2025-05-28 19:44:59] [INFO] Número de itens encontrados no Mercado Livre: 51
+[2025-05-28 19:44:59] [INFO] Dados salvos em: ../output/mercado_livre_data.txt
+[2025-05-28 19:44:59] [INFO] Dados salvos em: output/mercado_livre_data.txt
+[2025-05-28 19:44:59] [INFO] Iniciando scraping em: OLX
+[2025-05-28 19:45:00] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/carros-vans-e-utilitarios
+[2025-05-28 19:45:00] [INFO] Numero de itens encontrados na OLX: 0
+[2025-05-28 19:45:00] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
+[2025-05-28 19:46:01] [INFO] Diretorio ja existe: ../output
+[2025-05-28 19:46:01] [INFO] Iniciando scraping em: Mercado Livre
+[2025-05-28 19:46:03] [INFO] Página baixada com sucesso: https://lista.mercadolivre.com.br/celulares
+[2025-05-28 19:46:03] [INFO] Número de itens encontrados no Mercado Livre: 51
+[2025-05-28 19:46:03] [INFO] Dados salvos em: ../output/mercado_livre_data.txt
+[2025-05-28 19:46:03] [INFO] Dados salvos em: output/mercado_livre_data.txt
+[2025-05-28 19:46:03] [INFO] Iniciando scraping em: OLX
+[2025-05-28 19:46:05] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/carros-vans-e-utilitarios
+[2025-05-28 19:46:05] [INFO] Numero de itens encontrados na OLX: 0
+[2025-05-28 19:46:05] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
+[2025-05-28 19:46:05] [INFO] Iniciando scraping em: Mercado Livre
+[2025-05-28 19:46:06] [INFO] Página baixada com sucesso: https://lista.mercadolivre.com.br/iphone
+[2025-05-28 19:46:06] [INFO] Número de itens encontrados no Mercado Livre: 51
+[2025-05-28 19:46:06] [INFO] Dados salvos em: ../output/mercado_livre_data.txt
+[2025-05-28 19:46:06] [INFO] Dados salvos em: output/mercado_livre_data.txt
+[2025-05-28 19:46:06] [INFO] Iniciando scraping em: OLX
+[2025-05-28 19:46:07] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/corolla
+[2025-05-28 19:46:07] [INFO] Numero de itens encontrados na OLX: 0
+[2025-05-28 19:46:07] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
