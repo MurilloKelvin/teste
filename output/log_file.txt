@@ -27,3 +27,41 @@
 [2025-05-28 19:46:07] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/corolla
 [2025-05-28 19:46:07] [INFO] Numero de itens encontrados na OLX: 0
 [2025-05-28 19:46:07] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
+[2025-05-28 19:50:13] [INFO] Diretorio ja existe: ../output
+[2025-05-28 19:50:13] [INFO] Iniciando scraping em: Mercado Livre
+[2025-05-28 19:50:16] [INFO] Página baixada com sucesso: https://lista.mercadolivre.com.br/celulares
+[2025-05-28 19:50:16] [INFO] Número de itens encontrados no Mercado Livre: 52
+[2025-05-28 19:50:16] [INFO] Dados salvos em: ../output/mercado_livre_data.txt
+[2025-05-28 19:50:16] [INFO] Dados salvos em: output/mercado_livre_data.txt
+[2025-05-28 19:50:16] [INFO] Iniciando scraping em: OLX
+[2025-05-28 19:50:17] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/carros-vans-e-utilitarios
+[2025-05-28 19:50:17] [INFO] Numero de itens encontrados na OLX: 0
+[2025-05-28 19:50:17] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
+[2025-05-28 19:50:17] [INFO] Iniciando scraping em: Mercado Livre
+[2025-05-28 19:50:19] [INFO] Página baixada com sucesso: https://lista.mercadolivre.com.br/iphone
+[2025-05-28 19:50:19] [INFO] Número de itens encontrados no Mercado Livre: 51
+[2025-05-28 19:50:19] [INFO] Dados salvos em: ../output/mercado_livre_data.txt
+[2025-05-28 19:50:19] [INFO] Dados salvos em: output/mercado_livre_data.txt
+[2025-05-28 19:50:19] [INFO] Iniciando scraping em: OLX
+[2025-05-28 19:50:20] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/corolla
+[2025-05-28 19:50:20] [INFO] Numero de itens encontrados na OLX: 0
+[2025-05-28 19:50:20] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
+[2025-05-28 19:50:29] [INFO] Diretorio ja existe: ../output
+[2025-05-28 19:50:29] [INFO] Iniciando scraping em: Mercado Livre
+[2025-05-28 19:50:31] [INFO] Página baixada com sucesso: https://lista.mercadolivre.com.br/celulares
+[2025-05-28 19:50:31] [INFO] Número de itens encontrados no Mercado Livre: 52
+[2025-05-28 19:50:31] [INFO] Dados salvos em: ../output/mercado_livre_data.txt
+[2025-05-28 19:50:31] [INFO] Dados salvos em: output/mercado_livre_data.txt
+[2025-05-28 19:50:31] [INFO] Iniciando scraping em: OLX
+[2025-05-28 19:50:32] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/carros-vans-e-utilitarios
+[2025-05-28 19:50:32] [INFO] Numero de itens encontrados na OLX: 0
+[2025-05-28 19:50:32] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
+[2025-05-28 19:50:32] [INFO] Iniciando scraping em: Mercado Livre
+[2025-05-28 19:50:34] [INFO] Página baixada com sucesso: https://lista.mercadolivre.com.br/iphone
+[2025-05-28 19:50:34] [INFO] Número de itens encontrados no Mercado Livre: 51
+[2025-05-28 19:50:34] [INFO] Dados salvos em: ../output/mercado_livre_data.txt
+[2025-05-28 19:50:34] [INFO] Dados salvos em: output/mercado_livre_data.txt
+[2025-05-28 19:50:34] [INFO] Iniciando scraping em: OLX
+[2025-05-28 19:50:35] [INFO] Página baixada com sucesso: https://www.olx.com.br/autos-e-pecas/corolla
+[2025-05-28 19:50:35] [INFO] Numero de itens encontrados na OLX: 0
+[2025-05-28 19:50:35] [WARNING] Nenhum item para salvar em: ../output/olx_data.txt
